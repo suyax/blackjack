@@ -17,12 +17,34 @@ class window.App extends Backbone.Model
     console.log 'staring a new game'
 
   processHitRequest: (player)->
-    console.log('processing hitRequest')
-    console.log(player.minScore())
+    console.log 'processing hitRequest'
+    if player.minScore() < 21
+      if !player.isDealer
+        console.log 'requesting processing dealer\'s turn'
+        @.processDecisionforDealer()
+
     if player.minScore() > 21
-      console.log('current player has busted')
-      console.log('declaring the winner')
-      @.declareWinner(player, false);
+      console.log 'current player has busted'
+      console.log 'declaring the winner'
+      @.declareWinner player, false
+
+  processDecisionforDealer: ->
+    if @.get 'dealerHand'
+        .scores[0] is 17
+      console.log('processing dealer\'s turn')
+      @.get 'dealerHand'
+        .hit()
+    else
+      console.log('processing dealer\'s turn')
+      p = @.get 'dealerHand'
+        .minScore() * (1/21)
+      n = Math.random()
+      console.log(p, n)
+    #   if n <= p then @.get 'dealerHand'
+    #     .stand();
+      if n > p 
+        @.get 'dealerHand'
+        .hit()
 
   endGame: ->
     @trigger 'endGame', @  
