@@ -11,6 +11,9 @@ class window.Hand extends Backbone.Collection
     @trigger 'hitRequest', @
     return @.last()
 
+  stand: ->
+    console.log 'player has chosen to stand'
+    @trigger 'standRequest', @
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -19,6 +22,11 @@ class window.Hand extends Backbone.Collection
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0
   , 0
+
+  realScore: ->
+    if !@isDealer then return @minScore()
+    else
+      return @minScore() + @.models[0].attributes.value
 
   scores: ->
     # The scores are an array of potential scores.

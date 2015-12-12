@@ -11,6 +11,12 @@ class window.App extends Backbone.Model
 
     @get 'playerHand'
       .on 'hitRequest', @processHitRequest, @
+    @get 'dealerHand'
+      .on 'hitRequest', @processHitRequest, @
+    @get 'playerHand'
+      .on 'standRequest', @processStandRequest, @
+    @get 'dealerHand'
+      .on 'standRequest', @processStandRequest, @
 
   startGame: ->
     @trigger 'startGame', @
@@ -18,12 +24,11 @@ class window.App extends Backbone.Model
 
   processHitRequest: (player)->
     console.log 'processing hitRequest'
-    if player.minScore() < 21
+    if player.realScore() < 21
       if !player.isDealer
-        console.log 'requesting processing dealer\'s turn'
         @.processDecisionforDealer()
 
-    if player.minScore() > 21
+    if player.realScore() > 21
       console.log 'current player has busted'
       console.log 'declaring the winner'
       @.declareWinner player, false
@@ -39,7 +44,6 @@ class window.App extends Backbone.Model
       p = @.get 'dealerHand'
         .minScore() * (1/21)
       n = Math.random()
-      console.log(p, n)
     #   if n <= p then @.get 'dealerHand'
     #     .stand();
       if n > p 
