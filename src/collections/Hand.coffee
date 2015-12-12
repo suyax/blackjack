@@ -1,7 +1,7 @@
 class window.Hand extends Backbone.Collection
   model: Card
 
-  initialize: (array, @deck, @isDealer) ->
+  initialize: (array, @deck, @isDealer, @standStatus) ->
 
   hit: ->
     console.log 'player has chosen to hit'
