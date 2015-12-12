@@ -4,8 +4,12 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
+    console.log 'player has chosen to hit'
+    console.log 'picking a new card to add'
     @add(@deck.pop())
-    @last()
+    console.log 'sending hitRequest'
+    @trigger 'hitRequest', @
+    return @.last()
 
 
   hasAce: -> @reduce (memo, card) ->
