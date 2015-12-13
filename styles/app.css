@@ -1,14 +1,23 @@
+body {
+  background-color: #006622;
+}
 .card {
+  position: relative;
   float: left;
   border: solid 1px black;
   width: 100px;
   border-radius: 5px;
   height: 140px;
   margin-right: 20px;
+  margin:-left: 20px;
 }
 
 .covered {
-  background-color: black;
+  display: block;
+  box-sizing:border-box;
+  background-image: url('../img/card-back.png');
+  background-position: center center;
+  z-index: 100;
 }
 
 .hand {

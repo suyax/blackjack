@@ -4,7 +4,9 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer, @standStatus) ->
 
   hit: ->
-    console.log 'player has chosen to hit'
+    currentPlayer = if(@isDealer) then 'dealer'
+    else 'player'
+    console.log currentPlayer, 'has chosen to hit'
     console.log 'picking a new card to add'
     @add(@deck.pop())
     console.log 'sending hitRequest'
@@ -12,7 +14,9 @@ class window.Hand extends Backbone.Collection
     return @.last()
 
   stand: ->
-    console.log 'player has chosen to stand'
+    currentPlayer = if(@isDealer) then 'dealer'
+    else 'player'
+    console.log currentPlayer, 'has chosen to stand'
     @trigger 'standRequest', @
 
   hasAce: -> @reduce (memo, card) ->
